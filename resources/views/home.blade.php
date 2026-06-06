@@ -131,18 +131,31 @@
 </head>
 <body>
 
-    <div style="text-align: right; padding: 20px 40px; background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin-bottom: 30px;">
-    @auth
-        <span style="color: #64748b; margin-right: 15px;">Halo, {{ Auth::user()->name }}!</span>
-        
-        <form method="POST" action="{{ route('logout') }}" style="display: inline;">
-            @csrf
-            <button type="submit" style="background: none; border: none; color: #ef4444; font-weight: bold; cursor: pointer;">Log Out</button>
-        </form>
-    @else
-        <a href="{{ route('login') }}" style="text-decoration: none; color: #64748b; font-weight: bold; margin-right: 20px;">Login</a>
-        <a href="{{ route('register') }}" style="text-decoration: none; background: #3b82f6; color: white; padding: 8px 20px; border-radius: 50px; font-weight: bold;">Daftar</a>
-    @endauth
+    <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 40px; background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin-bottom: 40px;">
+    
+    <div>
+        <a href="{{ route('landing') }}" style="text-decoration: none; font-weight: 800; color: #1e293b; font-size: 20px;">
+            <span style="background: linear-gradient(135deg, #3b82f6, #8b5cf6); -webkit-background-clip: text; color: transparent;">⚡</span> DevAcademy
+        </a>
+    </div>
+    
+    <div>
+        @auth
+            <span style="color: #64748b; margin-right: 20px;">Halo, {{ Auth::user()->name }}!</span>
+            
+            <a href="{{ route('dashboard') }}" style="text-decoration: none; color: #3b82f6; font-weight: bold; margin-right: 20px; padding: 8px 15px; background: #eff6ff; border-radius: 50px; transition: all 0.2s;">
+                📊 Dashboard Saya
+            </a>
+            
+            <form method="POST" action="{{ route('logout') }}" style="display: inline;">
+                @csrf
+                <button type="submit" style="background: none; border: none; color: #ef4444; font-weight: bold; cursor: pointer;">Log Out</button>
+            </form>
+        @else
+            <a href="{{ route('login') }}" style="text-decoration: none; color: #64748b; font-weight: bold; margin-right: 20px;">Login</a>
+            <a href="{{ route('register') }}" style="text-decoration: none; background: #3b82f6; color: white; padding: 8px 20px; border-radius: 50px; font-weight: bold;">Daftar</a>
+        @endauth
+    </div>
 </div>
 
     <div class="container">

@@ -1,47 +1,105 @@
-<x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masuk - DevAcademy</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
 
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at top left, #e0e7ff 0%, #f8fafc 100%);
+            color: #0f172a;
+        }
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        .auth-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 50px 40px;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.04);
+            width: 100%;
+            max-width: 400px;
+            border: 1px solid #f1f5f9;
+            text-align: center;
+        }
+
+        .logo { font-size: 24px; font-weight: 800; color: #1e293b; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 30px;}
+        .logo-icon { background: linear-gradient(135deg, #3b82f6, #8b5cf6); -webkit-background-clip: text; color: transparent; font-size: 28px; }
+
+        .auth-card h2 { margin: 0 0 10px 0; font-size: 24px; }
+        .auth-card p { color: #64748b; margin: 0 0 30px 0; font-size: 15px; }
+
+        .form-group { margin-bottom: 20px; text-align: left; }
+        label { display: block; font-weight: 600; margin-bottom: 8px; font-size: 14px; color: #475569; }
+        
+        input[type="email"], input[type="password"], input[type="text"] {
+            width: 100%; padding: 14px 16px; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 15px; box-sizing: border-box; transition: all 0.2s; font-family: inherit;
+        }
+        input:focus { border-color: #3b82f6; outline: none; box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1); }
+
+        .btn-submit {
+            background: linear-gradient(135deg, #3b82f6, #6366f1); color: white; border: none; padding: 15px; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; width: 100%; transition: all 0.3s ease; margin-top: 10px; font-family: inherit;
+        }
+        .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3); }
+
+        .error-message { color: #ef4444; font-size: 13px; margin-top: 5px; display: block; }
+        .auth-links { margin-top: 25px; font-size: 14px; color: #64748b; }
+        .auth-links a { color: #3b82f6; text-decoration: none; font-weight: 600; }
+        .auth-links a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+    <div class="auth-card">
+        <a href="{{ route('landing') }}" class="logo">
+            <span class="logo-icon">⚡</span> DevAcademy
+        </a>
+        
+        <h2>Selamat Datang Kembali!</h2>
+        <p>Silakan masuk ke akun belajarmu.</p>
+
+        @if ($errors->any())
+            <div style="background: #fee2e2; color: #ef4444; padding: 10px; border-radius: 8px; margin-bottom: 20px; font-size: 14px;">
+                Email atau password yang kamu masukkan salah.
+            </div>
+        @endif
+
+        <form method="POST" action="{{ route('login') }}">
+            @csrf
+
+            <div class="form-group">
+                <label>Alamat Email</label>
+                <input type="email" name="email" value="{{ old('email') }}" required autofocus placeholder="contoh@email.com">
+            </div>
+
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" name="password" required placeholder="••••••••">
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; font-size: 14px;">
+                <label style="margin: 0; font-weight: normal; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                    <input type="checkbox" name="remember" style="width: 16px; height: 16px; accent-color: #3b82f6;"> Ingat Saya
+                </label>
+                @if (Route::has('password.request'))
+                    <a href="{{ route('password.request') }}" style="color: #3b82f6; text-decoration: none; font-weight: 600;">Lupa Password?</a>
+                @endif
+            </div>
+
+            <button type="submit" class="btn-submit">Masuk ke Dashboard</button>
+        </form>
+
+        <div class="auth-links">
+            Belum punya akun? <a href="{{ route('register') }}">Daftar Gratis</a>
         </div>
+    </div>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-            </label>
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
-
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+</body>
+</html>

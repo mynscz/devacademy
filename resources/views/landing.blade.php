@@ -21,42 +21,49 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 5%;
-            background: rgba(255, 255, 255, 0.9);
+            padding: 15px 5%;
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             position: fixed;
-            width: 90%;
+            width: 100%;
             top: 0;
             z-index: 100;
             box-sizing: border-box;
             box-shadow: 0 1px 2px rgba(0,0,0,0.05);
         }
 
-        .logo { font-size: 24px; font-weight: 800; color: #1e293b; text-decoration: none; display: flex; align-items: center; gap: 8px;}
-        .logo-icon { background: linear-gradient(135deg, #3b82f6, #8b5cf6); -webkit-background-clip: text; color: transparent; font-size: 28px; }
+        .logo { font-size: 22px; font-weight: 800; color: #1e293b; text-decoration: none; display: flex; align-items: center; gap: 8px;}
+        .logo-icon { background: linear-gradient(135deg, #3b82f6, #8b5cf6); -webkit-background-clip: text; color: transparent; font-size: 26px; }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
 
         .nav-links a {
             text-decoration: none;
             color: #475569;
             font-weight: 600;
-            margin-left: 25px;
             transition: color 0.2s;
+            font-size: 15px;
         }
         .nav-links a:hover { color: #3b82f6; }
+        
         .btn-nav-primary {
-            background: #1e293b; color: white !important; padding: 10px 24px; border-radius: 50px;
+            background: #1e293b; color: white !important; padding: 10px 20px; border-radius: 50px;
         }
         .btn-nav-primary:hover { background: #0f172a; transform: translateY(-2px); }
 
         /* --- HERO SECTION --- */
         .hero {
-            padding: 160px 5% 100px;
+            padding: 150px 5% 80px;
             text-align: center;
             background: radial-gradient(circle at top right, #e0e7ff 0%, #f8fafc 40%);
         }
 
         .hero h1 {
-            font-size: 56px;
+            font-size: 52px;
             font-weight: 800;
             line-height: 1.2;
             margin-bottom: 20px;
@@ -70,7 +77,7 @@
         }
 
         .hero p {
-            font-size: 20px;
+            font-size: 18px;
             color: #64748b;
             max-width: 600px;
             margin: 0 auto 40px;
@@ -80,16 +87,17 @@
         .cta-group {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 15px;
         }
 
         .btn {
-            padding: 16px 36px;
+            padding: 15px 32px;
             border-radius: 50px;
             font-size: 16px;
             font-weight: 600;
             text-decoration: none;
             transition: all 0.3s ease;
+            box-sizing: border-box;
         }
 
         .btn-primary {
@@ -116,22 +124,22 @@
 
         /* --- FEATURES SECTION --- */
         .features {
-            padding: 80px 5%;
+            padding: 60px 5%;
             background: white;
             text-align: center;
         }
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-            margin-top: 50px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
             max-width: 1200px;
             margin-inline: auto;
         }
 
         .feature-card {
-            padding: 40px 30px;
+            padding: 40px 25px;
             background: #f8fafc;
             border-radius: 24px;
             transition: transform 0.3s ease;
@@ -149,7 +157,7 @@
             margin-bottom: 20px;
         }
 
-        .feature-card h3 { margin: 0 0 15px 0; font-size: 22px; }
+        .feature-card h3 { margin: 0 0 15px 0; font-size: 20px; }
         .feature-card p { color: #64748b; line-height: 1.6; margin: 0; }
 
         /* --- FOOTER --- */
@@ -157,10 +165,52 @@
             background: #0f172a;
             color: #94a3b8;
             text-align: center;
-            padding: 40px 5%;
+            padding: 30px 5%;
         }
-        
         .footer-logo { color: white; font-weight: 800; font-size: 20px; margin-bottom: 10px;}
+
+        /* =========================================
+           MEDIA QUERIES (RESPONSIVE MOBILE DESIGN)
+           ========================================= */
+        @media (max-width: 768px) {
+            /* Perbaikan Navigasi */
+            nav {
+                flex-direction: column;
+                padding: 15px;
+                gap: 15px;
+            }
+            .nav-links {
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+            .nav-links a {
+                font-size: 14px;
+            }
+            
+            /* Perbaikan Area Hero (Teks & Tombol) */
+            .hero {
+                padding: 140px 5% 60px;
+            }
+            .hero h1 {
+                font-size: 34px; /* Teks dikecilkan untuk HP */
+            }
+            .hero p {
+                font-size: 16px;
+            }
+            .cta-group {
+                flex-direction: column; /* Tombol dibuat ke bawah, bukan ke samping */
+                gap: 15px;
+                width: 100%;
+                max-width: 300px;
+                margin: 0 auto;
+            }
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
     </style>
 </head>
 <body>
@@ -172,7 +222,7 @@
         <div class="nav-links">
             <a href="{{ route('home') }}">Katalog Kelas</a>
             @auth
-                <a href="{{ route('home') }}" class="btn-nav-primary">Dashboard Saya</a>
+                <a href="{{ route('dashboard') }}" class="btn-nav-primary">Dashboard Saya</a>
             @else
                 <a href="{{ route('login') }}">Masuk</a>
                 <a href="{{ route('register') }}" class="btn-nav-primary">Daftar Gratis</a>
@@ -191,8 +241,8 @@
     </section>
 
     <section class="features">
-        <h2 style="font-size: 36px; margin-bottom: 10px;">Mengapa Belajar di Sini?</h2>
-        <p style="color: #64748b; font-size: 18px;">Didesain khusus agar materi mudah dipahami dan langsung bisa dipraktikkan.</p>
+        <h2 style="font-size: 32px; margin-bottom: 10px;">Mengapa Belajar di Sini?</h2>
+        <p style="color: #64748b; font-size: 16px;">Didesain khusus agar materi mudah dipahami dan langsung bisa dipraktikkan.</p>
 
         <div class="features-grid">
             <div class="feature-card">
